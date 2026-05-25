@@ -1,0 +1,48 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import { site } from "../data/site";
+---
+<PageLayout
+  title="Contacto"
+  eyebrow="Escribir"
+  lead="Para colaboraciones, comentarios académicos o intercambio intelectual."
+  width="narrow"
+>
+  <div class="prose" style="max-width: 60ch;">
+    <p>
+      Escribir a un blog académico es, también, una forma de conversación. Si
+      llegaste hasta aquí porque alguna entrada te resonó, porque quieres
+      sugerir una lectura o porque te interesa proponer una colaboración, te
+      agradezco mucho que escribas.
+    </p>
+
+    <h2>Correo electrónico</h2>
+    <p>
+      <strong>{site.email}</strong>
+      <br />
+      <small class="muted">
+        [PENDIENTE: reemplazar el placeholder de <code>src/data/site.ts</code>
+        por el correo definitivo. Si prefieres no mostrar correo aquí, puedes
+        dejar solo los perfiles externos.]
+      </small>
+    </p>
+
+    <h2>Perfiles académicos</h2>
+    <SocialLinks variant="stack" showHandle />
+
+    <h2>Redes sociales</h2>
+    <p class="muted">
+      [PENDIENTE: añadir perfiles en redes sociales si más adelante se decide
+      tener presencia activa en alguna —Bluesky, Mastodon, X u otra.]
+    </p>
+
+    <hr />
+
+    <p class="muted" style="font-size: var(--fs-sm);">
+      Por respeto al tiempo de quien escribe, las respuestas pueden tardar
+      algunos días. Toda propuesta o pregunta es bienvenida; gracias por la
+      paciencia.
+    </p>
+  </div>
+</PageLayout>

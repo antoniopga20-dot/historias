@@ -1,0 +1,125 @@
+---
+import { site } from "../data/site";
+import { primaryNav } from "../data/navigation";
+
+const pathname = Astro.url.pathname.replace(/\/+$/, "") || "/";
+function isCurrent(href: string) {
+  const normalized = href.replace(/\/+$/, "") || "/";
+  if (normalized === "/") return pathname === "/";
+  return pathname === normalized || pathname.startsWith(normalized + "/");
+}
+---
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-header__brand" href="/" aria-label={`${site.name} — inicio`}>
+      {site.name}
+      <small>{site.author}</small>
+    </a>
+
+    <div class="site-header__actions">
+      <button
+        class="theme-toggle"
+        type="button"
+        aria-label="Cambiar entre modo claro y oscuro"
+        title="Cambiar tema"
+        data-theme-toggle
+      >
+        <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">☀</span>
+        <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">☾</span>
+      </button>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-controls="primary-nav"
+        aria-expanded="false"
+        data-nav-toggle
+      >
+        Menú
+      </button>
+    </div>
+
+    <nav class="site-nav" id="primary-nav" aria-label="Navegación principal">
+      {primaryNav.map((item) => (
+        <a
+          href={item.href}
+          aria-current={isCurrent(item.href) ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    padding: 0;
+    transition: border-color var(--t-fast), color var(--t-fast), background var(--t-fast);
+  }
+  .theme-toggle:hover { border-color: var(--text-muted); background: var(--bg-alt); }
+  .theme-toggle__icon { font-size: 1rem; line-height: 1; }
+  .theme-toggle__icon--moon { display: none; }
+  :root[data-theme="dark"] .theme-toggle__icon--sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle__icon--moon { display: inline; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-toggle__icon--sun { display: none; }
+    :root:not([data-theme="light"]) .theme-toggle__icon--moon { display: inline; }
+  }
+</style>
+
+<script>
+  // Tema: aplica antes de que se renderice para evitar parpadeo
+  const toggleBtn = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+  function getStoredTheme(): "light" | "dark" | null {
+    try { return (localStorage.getItem("theme") as "light" | "dark" | null); } catch { return null; }
+  }
+  function applyTheme(theme: "light" | "dark" | null) {
+    const root = document.documentElement;
+    if (theme === "light" || theme === "dark") {
+      root.setAttribute("data-theme", theme);
+    } else {
+      root.removeAttribute("data-theme");
+    }
+  }
+  applyTheme(getStoredTheme());
+
+  toggleBtn?.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme");
+    let next: "light" | "dark";
+    if (current === "dark") next = "light";
+    else if (current === "light") next = "dark";
+    else {
+      // Sin valor explícito: si el sistema es oscuro, cambiamos a claro; si no, a oscuro.
+      const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      next = systemDark ? "light" : "dark";
+    }
+    try { localStorage.setItem("theme", next); } catch {}
+    applyTheme(next);
+  });
+
+  // Menú móvil
+  const navToggle = document.querySelector<HTMLButtonElement>("[data-nav-toggle]");
+  const nav = document.getElementById("primary-nav");
+  if (navToggle && nav) {
+    navToggle.addEventListener("click", () => {
+      const isOpen = nav.classList.toggle("is-open");
+      navToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+  }
+</script>

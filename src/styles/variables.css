@@ -1,0 +1,131 @@
+/* =======================================================================
+   Historias — variables de diseño
+   Edita aquí colores, tipografías y medidas para afectar todo el sitio.
+   ======================================================================= */
+
+:root {
+  /* --- Paleta ------------------------------------------------------- */
+  --color-white: #F8FAFC;          /* Blanco principal */
+  --color-warm-white: #F5F1E8;     /* Blanco cálido alternativo */
+  --color-gray-100: #E2E8F0;       /* Gris claro */
+  --color-gray-300: #CBD5E1;       /* Gris claro medio */
+  --color-gray-500: #64748B;       /* Gris medio */
+  --color-gray-700: #334155;       /* Gris oscuro */
+  --color-ink: #0F172A;            /* Azul noche / texto principal */
+  --color-ink-deep: #1E293B;       /* Azul profundo */
+  --color-accent: #1D4ED8;         /* Azul académico / acento */
+  --color-accent-soft: #93C5FD;    /* Azul suave para detalles */
+
+  /* Semánticos (modo claro) */
+  --bg: var(--color-white);
+  --bg-alt: var(--color-warm-white);
+  --bg-inverse: var(--color-ink);
+  --text: var(--color-ink);
+  --text-soft: var(--color-gray-700);
+  --text-muted: var(--color-gray-500);
+  --rule: var(--color-gray-100);
+  --link: var(--color-accent);
+  --link-hover: var(--color-ink-deep);
+  --card-bg: var(--color-white);
+  --header-bg: rgba(248, 250, 252, 0.92);
+
+  /* --- Tipografía --------------------------------------------------- */
+  /*
+   * Por defecto usamos fuentes seguras del sistema con buena lectura editorial.
+   * Si más adelante incorporas Philosopher y Creato Display como archivos
+   * locales en /public/fonts y declaras @font-face en global.css,
+   * los nombres ya quedan en la cascada.
+   */
+  --font-serif:
+    "Cormorant Garamond", "Philosopher", "Literata",
+    "Iowan Old Style", "Palatino Linotype", "Palatino",
+    Georgia, "Times New Roman", serif;
+
+  --font-sans:
+    "Inter", "Source Sans 3", "IBM Plex Sans",
+    "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Escala tipográfica */
+  --fs-xs: 0.8125rem;     /* 13 */
+  --fs-sm: 0.9375rem;     /* 15 */
+  --fs-base: 1.0625rem;   /* 17 — cuerpo del blog cómodo */
+  --fs-md: 1.1875rem;     /* 19 */
+  --fs-lg: 1.4375rem;     /* 23 */
+  --fs-xl: 1.75rem;       /* 28 */
+  --fs-2xl: 2.25rem;      /* 36 */
+  --fs-3xl: 3rem;         /* 48 */
+  --fs-4xl: 3.875rem;     /* 62 — hero */
+
+  /* Interlineado */
+  --lh-tight: 1.15;
+  --lh-snug: 1.3;
+  --lh-normal: 1.55;
+  --lh-relaxed: 1.75;     /* cuerpo del blog */
+
+  /* Peso */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* --- Medidas y espaciado ----------------------------------------- */
+  --measure-prose: 70ch;          /* ancho de lectura */
+  --measure-wide: 92ch;
+  --container-max: 1200px;
+  --container-pad-inline: clamp(1.25rem, 4vw, 2.5rem);
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  /* --- Transiciones ------------------------------------------------- */
+  --t-fast: 150ms ease;
+  --t-base: 250ms ease;
+  --t-slow: 800ms ease;
+}
+
+/* =======================================================================
+   Modo oscuro
+   Se activa con: <html data-theme="dark"> ... o por prefers-color-scheme
+   ======================================================================= */
+:root[data-theme="dark"] {
+  --bg: #0B1220;
+  --bg-alt: #0F172A;
+  --text: #E2E8F0;
+  --text-soft: #CBD5E1;
+  --text-muted: #94A3B8;
+  --rule: #1F2A3D;
+  --link: #93C5FD;
+  --link-hover: #BFDBFE;
+  --card-bg: #0F172A;
+  --header-bg: rgba(11, 18, 32, 0.92);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1220;
+    --bg-alt: #0F172A;
+    --text: #E2E8F0;
+    --text-soft: #CBD5E1;
+    --text-muted: #94A3B8;
+    --rule: #1F2A3D;
+    --link: #93C5FD;
+    --link-hover: #BFDBFE;
+    --card-bg: #0F172A;
+    --header-bg: rgba(11, 18, 32, 0.92);
+  }
+}

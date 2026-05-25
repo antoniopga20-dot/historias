@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "../layouts/PageLayout.astro";
+import ActivityItem from "../components/ActivityItem.astro";
+
+const all = await getCollection("actividades", ({ data }) => !data.draft);
+
+const groups: { key: string; label: string }[] = [
+  { key: "congreso", label: "Congresos" },
+  { key: "conferencia", label: "Conferencias" },
+  { key: "mesa-redonda", label: "Mesas redondas" },
+  { key: "entrevista", label: "Entrevistas" },
+  { key: "curso", label: "Cursos" },
+  { key: "taller", label: "Talleres" },
+  { key: "organizacion", label: "Organización de eventos" },
+  { key: "participacion", label: "Participaciones académicas" },
+  { key: "estancia", label: "Estancias" },
+  { key: "proyecto", label: "Proyectos" },
+];
+
+function byDateDesc(a: any, b: any) {
+  const ad = a.data.date ? new Date(a.data.date).valueOf() : 0;
+  const bd = b.data.date ? new Date(b.data.date).valueOf() : 0;
+  return bd - ad;
+}
+---
+<PageLayout
+  title="Actividades"
+  eyebrow="Vida académica"
+  lead="Congresos, conferencias, cursos, mesas y otros espacios de trabajo e intercambio."
+  width="narrow"
+>
+  {all.length === 0 && (
+    <p class="muted">
+      Esta página está en construcción. Las actividades se irán cargando desde
+      <code>src/content/actividades/</code>.
+    </p>
+  )}
+
+  {groups.map((g) => {
+    const items = all.filter((a) => a.data.kind === g.key).sort(byDateDesc);
+    if (items.length === 0) return null;
+    return (
+      <section style="margin-bottom: var(--space-7);">
+        <h2 style="font-size: var(--fs-xl); border-bottom: 1px solid var(--rule); padding-bottom: var(--space-2);">
+          {g.label}
+        </h2>
+        {items.map((a) => (
+          <ActivityItem
+            title={a.data.title}
+            kind={g.label.slice(0, -1)}
+            place={a.data.place}
+            date={a.data.date}
+            details={a.data.details}
+            url={a.data.url}
+          />
+        ))}
+      </section>
+    );
+  })}
+</PageLayout>

@@ -1,0 +1,27 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Container from "../components/Container.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  eyebrow?: string;
+  lead?: string;
+  width?: "default" | "narrow" | "prose";
+}
+const { title, description, eyebrow, lead, width = "narrow" } = Astro.props;
+---
+<BaseLayout title={title} description={description}>
+  <section class="section section--alt" style="padding-block: clamp(var(--space-7), 7vw, var(--space-8));">
+    <Container width={width}>
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h1 style="margin: 0 0 var(--space-3) 0; font-size: clamp(2rem, 4vw, 3rem);">{title}</h1>
+      {lead && <p class="muted" style="margin:0; max-width: 60ch; font-size: var(--fs-md);">{lead}</p>}
+    </Container>
+  </section>
+  <section class="section">
+    <Container width={width}>
+      <slot />
+    </Container>
+  </section>
+</BaseLayout>

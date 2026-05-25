@@ -1,0 +1,64 @@
+---
+import { heroImages, heroIntervalMs, type HeroImage } from "../data/heroImages";
+import { site, welcome } from "../data/site";
+
+interface Props {
+  images?: HeroImage[];
+  intervalMs?: number;
+}
+const { images = heroImages, intervalMs = heroIntervalMs } = Astro.props;
+---
+<section class="hero" aria-label="Portada">
+  <div class="hero__slides" data-hero-slides data-interval={intervalMs}>
+    {images.map((img, i) => (
+      <div
+        class={`hero__slide${i === 0 ? " is-active" : ""}`}
+        role="img"
+        aria-label={img.alt}
+        style={`background-image: url('${img.src}');`}
+        data-slide-index={i}
+      ></div>
+    ))}
+  </div>
+  <div class="hero__overlay" aria-hidden="true"></div>
+
+  <div class="container hero__content">
+    <p class="hero__eyebrow">Bitácora académica</p>
+    <h1 class="hero__title">{site.name}</h1>
+    <p class="hero__byline">{site.author}</p>
+    <p class="hero__tagline">{welcome.short}</p>
+    <div class="hero__cta">
+      <a class="btn btn--ghost" href="/blog">Leer el blog</a>
+      <a class="btn btn--ghost" href="/sobre-mi">Sobre mí</a>
+    </div>
+  </div>
+
+  <p class="hero__credit" data-hero-credit aria-live="polite">
+    {images[0]?.credit ?? ""}
+  </p>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-hero-slides]");
+  if (root) {
+    const slides = Array.from(root.querySelectorAll<HTMLElement>(".hero__slide"));
+    const credits = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-hero-credit]"),
+    );
+    const creditTexts = slides.map((s) =>
+      s.getAttribute("aria-label")?.includes("[PENDIENTE")
+        ? ""
+        : (s.dataset.credit ?? ""),
+    );
+    const interval = Number(root.dataset.interval ?? 7000);
+    let idx = 0;
+    if (slides.length > 1) {
+      setInterval(() => {
+        slides[idx].classList.remove("is-active");
+        idx = (idx + 1) % slides.length;
+        slides[idx].classList.add("is-active");
+        if (credits.length && creditTexts[idx]) credits[0].textContent = creditTexts[idx];
+      }, interval);
+    }
+  }
+</script>

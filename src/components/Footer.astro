@@ -1,0 +1,49 @@
+---
+import { site } from "../data/site";
+import { primaryNav } from "../data/navigation";
+import { socialLinks } from "../data/socialLinks";
+
+const year = new Date().getFullYear();
+const footerNav = primaryNav.filter((n) => n.inFooter);
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div>
+        <span class="site-footer__brand">{site.name}</span>
+        <p style="margin:0 0 var(--space-4) 0; max-width: 42ch;">{site.tagline}</p>
+        <p style="margin:0; font-size: var(--fs-sm); color: rgba(248,250,252,0.7);">
+          Firmado por <strong style="color:#fff;">{site.author}</strong>.
+        </p>
+      </div>
+
+      <div>
+        <h3>Secciones</h3>
+        <ul class="list-bare">
+          {footerNav.map((n) => (
+            <li><a href={n.href}>{n.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3>En la red</h3>
+        <ul class="list-bare">
+          {socialLinks.map((s) => (
+            <li>
+              <a href={s.href} target="_blank" rel="noopener noreferrer me">
+                {s.label}
+              </a>
+            </li>
+          ))}
+          <li><a href="/rss.xml">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__copy">
+      <span>© {year} {site.author}. Algunos derechos reservados.</span>
+      <span>Sitio construido con Astro · Tipografía editorial sobria.</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,46 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+---
+<PageLayout
+  title="Suscríbete"
+  eyebrow="Mantente al tanto"
+  lead="Recibe avisos cuando se publiquen nuevas entradas."
+  width="narrow"
+>
+  <div class="prose" style="max-width: 60ch;">
+    <p>
+      Por ahora, la forma más sencilla y respetuosa de seguir <em>Historias</em>
+      es a través del <strong>feed RSS</strong>. Es gratuito, no requiere darme
+      ningún dato y funciona con cualquier lector de noticias.
+    </p>
+
+    <p>
+      <a class="btn" href="/rss.xml">Suscribirme por RSS</a>
+    </p>
+
+    <h2>¿Qué es RSS?</h2>
+    <p>
+      RSS es un sistema que te permite reunir todos los blogs que sigues en
+      un mismo lugar y leerlos en el momento que prefieras. Algunos lectores
+      gratuitos: <a href="https://feedly.com/" target="_blank" rel="noopener noreferrer">Feedly</a>,
+      <a href="https://www.inoreader.com/" target="_blank" rel="noopener noreferrer">Inoreader</a>,
+      <a href="https://newsblur.com/" target="_blank" rel="noopener noreferrer">NewsBlur</a>,
+      <a href="https://thunderbird.net/" target="_blank" rel="noopener noreferrer">Thunderbird</a>.
+    </p>
+
+    <h2>Boletín por correo</h2>
+    <p class="muted">
+      Próximamente podrás suscribirte para recibir nuevas entradas y
+      actualizaciones por correo electrónico. Como esta página se sostiene sin
+      costos, la integración por correo se incorporará solo si encuentra una
+      vía completamente gratuita y poco invasiva (por ejemplo, mediante
+      <a href="https://buttondown.com/" target="_blank" rel="noopener noreferrer">Buttondown</a> en su capa gratuita,
+      o publicando el feed RSS en algún servicio agregador).
+    </p>
+
+    <p class="muted" style="font-size: var(--fs-sm);">
+      [PENDIENTE: decidir si se integra un boletín por correo en una versión
+      futura.]
+    </p>
+  </div>
+</PageLayout>

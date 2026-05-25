@@ -1,0 +1,70 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+---
+<PageLayout
+  title="Buscar"
+  eyebrow="Búsqueda"
+  lead="Busca por palabra clave en todas las entradas del blog. La búsqueda se ejecuta en tu navegador, sin enviar nada a ningún servidor."
+  width="narrow"
+>
+  <div id="search" class="pagefind-wrap"></div>
+  <noscript>
+    <p class="muted">La búsqueda requiere JavaScript. También puedes navegar por <a href="/blog">el blog</a>.</p>
+  </noscript>
+</PageLayout>
+
+<link
+  rel="stylesheet"
+  href="/pagefind/pagefind-ui.css"
+/>
+
+<script is:inline>
+  // Pagefind se genera en build (carpeta /pagefind/), por eso lo cargamos como módulo dinámico en runtime.
+  (async function () {
+    try {
+      const mod = await import("/pagefind/pagefind-ui.js");
+      new mod.PagefindUI({
+        element: "#search",
+        showImages: false,
+        resetStyles: false,
+        showSubResults: true,
+        translations: {
+          placeholder: "Buscar en Historias…",
+          clear_search: "Limpiar",
+          load_more: "Ver más resultados",
+          search_label: "Buscar",
+          filters_label: "Filtros",
+          zero_results: "No se encontraron resultados para [SEARCH_TERM]",
+          many_results: "[COUNT] resultados para [SEARCH_TERM]",
+          one_result: "1 resultado para [SEARCH_TERM]",
+          alt_search: "Sin resultados para [SEARCH_TERM]. Mostrando resultados para [DIFFERENT_TERM]",
+          search_suggestion: "Sin resultados para [SEARCH_TERM]. Prueba con [DIFFERENT_TERM]",
+          searching: "Buscando [SEARCH_TERM]…",
+        },
+      });
+    } catch (e) {
+      const el = document.getElementById("search");
+      if (el) {
+        el.innerHTML =
+          '<p class="muted">El índice de búsqueda se genera al hacer <code>npm run build</code>. En modo desarrollo (<code>npm run dev</code>) el buscador no está activo. Ejecuta <code>npm run build && npm run preview</code> para probarlo.</p>';
+      }
+    }
+  })();
+</script>
+
+<style is:global>
+  .pagefind-wrap { margin-top: var(--space-5); }
+  :root {
+    --pagefind-ui-scale: 0.95;
+    --pagefind-ui-primary: var(--color-accent);
+    --pagefind-ui-text: var(--text);
+    --pagefind-ui-background: var(--card-bg);
+    --pagefind-ui-border: var(--rule);
+    --pagefind-ui-tag: var(--bg-alt);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 8px;
+    --pagefind-ui-image-border-radius: 8px;
+    --pagefind-ui-image-box-ratio: 3 / 2;
+    --pagefind-ui-font: var(--font-sans);
+  }
+</style>

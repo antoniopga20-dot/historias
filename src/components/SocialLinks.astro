@@ -1,0 +1,26 @@
+---
+import { socialLinks } from "../data/socialLinks";
+
+interface Props {
+  variant?: "inline" | "stack";
+  showHandle?: boolean;
+}
+const { variant = "inline", showHandle = false } = Astro.props;
+const styles = variant === "stack"
+  ? "display:flex; flex-direction:column; gap: var(--space-2);"
+  : "display:flex; flex-wrap:wrap; gap: var(--space-4);";
+---
+<ul class="list-bare" style={styles}>
+  {socialLinks.map((s) => (
+    <li>
+      <a
+        href={s.href}
+        target="_blank"
+        rel="noopener noreferrer me"
+        aria-label={s.ariaLabel ?? s.label}
+      >
+        {s.label}{showHandle && s.handle ? ` · ${s.handle}` : ""}
+      </a>
+    </li>
+  ))}
+</ul>

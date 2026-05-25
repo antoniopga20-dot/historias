@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "../../../layouts/PageLayout.astro";
+import PostCard from "../../../components/PostCard.astro";
+
+export async function getStaticPaths() {
+  function toSlug(name: string): string {
+    return name
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "");
+  }
+
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const tagMap = new Map<string, { name: string; posts: any[] }>();
+  for (const p of posts) {
+    for (const t of p.data.tags ?? []) {
+      const slug = toSlug(t);
+      if (!tagMap.has(slug)) tagMap.set(slug, { name: t, posts: [] });
+      tagMap.get(slug)!.posts.push(p);
+    }
+  }
+  return Array.from(tagMap.entries()).map(([slug, { name, posts }]) => ({
+    params: { slug },
+    props: { tagName: name, posts },
+  }));
+}
+
+const { tagName, posts } = Astro.props;
+const sorted = posts.sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<PageLayout
+  title={`Etiqueta: ${tagName}`}
+  description={`Entradas etiquetadas como "${tagName}".`}
+  eyebrow="Etiqueta"
+  lead={`Entradas etiquetadas como "${tagName}".`}
+  width="default"
+>
+  <p style="margin-bottom: var(--space-6);">
+    <a href="/blog" class="muted" style="font-size: var(--fs-sm);">← Ver todas las entradas</a>
+  </p>
+
+  <div class="grid grid--cards">
+    {sorted.map((p: any) => (
+      <PostCard
+        title={p.data.title}
+        href={`/blog/${p.slug}`}
+        date={p.data.date}
+        description={p.data.description}
+        category={p.data.category}
+        tags={p.data.tags}
+        cover={p.data.cover}
+      />
+    ))}
+  </div>
+</PageLayout>

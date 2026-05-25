@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  authors?: string;
+  year?: number | string;
+  venue?: string;
+  details?: string;
+  url?: string;
+  pdf?: string;
+  status?: "publicado" | "en prensa" | "en revisión" | "en preparación";
+}
+const { title, authors, year, venue, details, url, pdf, status } = Astro.props;
+---
+<article style="padding-block: var(--space-4); border-bottom: 1px solid var(--rule);">
+  <header style="display:flex; gap: var(--space-3); flex-wrap: wrap; align-items: baseline; margin-bottom: var(--space-2);">
+    <h3 style="margin:0; font-size: var(--fs-lg);">
+      {url ? <a href={url} target="_blank" rel="noopener noreferrer">{title}</a> : title}
+    </h3>
+    {year && <span class="muted" style="font-variant-numeric: tabular-nums;">{year}</span>}
+    {status && <span class="tag">{status}</span>}
+  </header>
+  <p class="muted" style="margin:0 0 var(--space-2) 0; font-size: var(--fs-sm);">
+    {authors && <span>{authors}</span>}
+    {authors && venue && <span> · </span>}
+    {venue && <em>{venue}</em>}
+  </p>
+  {details && <p style="margin:0; color: var(--text-soft); font-size: var(--fs-sm);">{details}</p>}
+  {pdf && (
+    <p style="margin: var(--space-2) 0 0 0; font-size: var(--fs-xs);">
+      <a href={pdf}>Descargar PDF</a>
+    </p>
+  )}
+</article>

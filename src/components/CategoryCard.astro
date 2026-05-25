@@ -1,0 +1,17 @@
+---
+import type { Category } from "../data/categories";
+
+interface Props {
+  category: Category;
+  count?: number;
+}
+const { category, count } = Astro.props;
+---
+<a href={`/blog?cat=${category.slug}`} class="card" style="text-decoration:none;">
+  <span class="eyebrow">Categoría</span>
+  <h3 class="card__title">{category.name}</h3>
+  <p class="card__excerpt">{category.description}</p>
+  {typeof count === "number" && (
+    <small class="muted">{count} {count === 1 ? "entrada" : "entradas"}</small>
+  )}
+</a>

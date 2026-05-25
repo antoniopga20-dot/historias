@@ -1,0 +1,46 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "../../../layouts/PageLayout.astro";
+import PostCard from "../../../components/PostCard.astro";
+import { categories } from "../../../data/categories";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  // Solo generamos páginas para categorías que tienen al menos un post.
+  const used = new Set(posts.map((p) => p.data.category).filter(Boolean) as string[]);
+  return categories
+    .filter((c) => used.has(c.slug))
+    .map((c) => ({
+      params: { slug: c.slug },
+      props: { category: c, posts: posts.filter((p) => p.data.category === c.slug) },
+    }));
+}
+
+const { category, posts } = Astro.props;
+const sorted = posts.sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<PageLayout
+  title={`Categoría: ${category.name}`}
+  description={category.description}
+  eyebrow="Categoría"
+  lead={category.description}
+  width="default"
+>
+  <p style="margin-bottom: var(--space-6);">
+    <a href="/blog" class="muted" style="font-size: var(--fs-sm);">← Ver todas las entradas</a>
+  </p>
+
+  <div class="grid grid--cards">
+    {sorted.map((p: any) => (
+      <PostCard
+        title={p.data.title}
+        href={`/blog/${p.slug}`}
+        date={p.data.date}
+        description={p.data.description}
+        category={p.data.category}
+        tags={p.data.tags}
+        cover={p.data.cover}
+      />
+    ))}
+  </div>
+</PageLayout>

@@ -1,0 +1,81 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+
+type Link = { title: string; href: string; note?: string };
+type Group = { heading: string; intro?: string; links: Link[] };
+
+const groups: Group[] = [
+  {
+    heading: "Archivos y repositorios digitales",
+    intro: "Una selección no exhaustiva, en construcción.",
+    links: [
+      { title: "Mediateca INAH (México)", href: "https://mediateca.inah.gob.mx/", note: "Colecciones del Instituto Nacional de Antropología e Historia." },
+      { title: "Memórica México", href: "https://www.memoricamexico.gob.mx/", note: "Plataforma de la memoria histórica de México." },
+      { title: "Hemeroteca Nacional Digital de México (HNDM)", href: "https://www.hndm.unam.mx/" },
+      { title: "Wikimedia Commons", href: "https://commons.wikimedia.org/", note: "Imágenes y documentos con licencia libre." },
+      { title: "Archivo del Terror (Centro de Documentación y Archivo para la Defensa de los Derechos Humanos, Paraguay)", href: "https://www.pj.gov.py/contenido/130-archivo-del-terror", note: "[PENDIENTE: verificar URL más estable.]" },
+    ],
+  },
+  {
+    heading: "Revistas y editoriales académicas",
+    links: [
+      { title: "Redalyc", href: "https://www.redalyc.org/", note: "Red de revistas científicas de América Latina." },
+      { title: "SciELO", href: "https://scielo.org/" },
+      { title: "Latindex", href: "https://www.latindex.org/" },
+      { title: "[PENDIENTE: añadir revistas y editoriales relevantes para el sitio.]", href: "#" },
+    ],
+  },
+  {
+    heading: "Instituciones",
+    links: [
+      { title: "Instituto Mora (México)", href: "https://www.institutomora.edu.mx/" },
+      { title: "El Colegio de México", href: "https://www.colmex.mx/" },
+      { title: "Universidad Nacional de Asunción", href: "https://www.una.py/" },
+      { title: "[PENDIENTE: añadir las instituciones más relevantes para tu trabajo.]", href: "#" },
+    ],
+  },
+  {
+    heading: "Recursos para historiadores",
+    links: [
+      { title: "Zotero", href: "https://www.zotero.org/", note: "Gestor de referencias gratuito y libre." },
+      { title: "Tropy", href: "https://tropy.org/", note: "Organización de fotografías de archivo." },
+      { title: "Recogito", href: "https://recogito.pelagios.org/", note: "Anotación colaborativa de textos e imágenes." },
+      { title: "Pandoc", href: "https://pandoc.org/" },
+    ],
+  },
+  {
+    heading: "Sitios personales y proyectos amigos",
+    links: [
+      { title: "[PENDIENTE: enlazar a colegas, proyectos colectivos o blogs de referencia.]", href: "#" },
+    ],
+  },
+];
+---
+<PageLayout
+  title="Enlaces"
+  eyebrow="Recursos"
+  lead="Un directorio personal de archivos, revistas, instituciones y herramientas útiles."
+  width="narrow"
+>
+  <p class="muted">
+    Esta página no pretende ser exhaustiva. Es, más bien, una lista de
+    consulta personal abierta al público.
+  </p>
+
+  {groups.map((g) => (
+    <section style="margin-top: var(--space-7);">
+      <h2 style="font-size: var(--fs-xl); border-bottom: 1px solid var(--rule); padding-bottom: var(--space-2);">
+        {g.heading}
+      </h2>
+      {g.intro && <p class="muted">{g.intro}</p>}
+      <ul class="list-bare">
+        {g.links.map((l) => (
+          <li style="padding-block: var(--space-3); border-bottom: 1px dashed var(--rule);">
+            <a href={l.href} target="_blank" rel="noopener noreferrer">{l.title}</a>
+            {l.note && <p class="muted" style="margin: var(--space-1) 0 0 0; font-size: var(--fs-sm);">{l.note}</p>}
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</PageLayout>

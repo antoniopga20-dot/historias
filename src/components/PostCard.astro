@@ -1,0 +1,38 @@
+---
+import { formatDate, isoDate } from "../utils/formatDate";
+import { findCategory } from "../data/categories";
+
+interface Props {
+  title: string;
+  href: string;
+  date: Date | string;
+  description?: string;
+  category?: string;
+  tags?: string[];
+  cover?: string;
+}
+const { title, href, date, description, category, tags = [], cover } = Astro.props;
+const categoryName = category ? findCategory(category)?.name ?? category : undefined;
+---
+<article class="card">
+  {cover && (
+    <a href={href} aria-hidden="true" tabindex="-1" style="display:block; margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-5)) var(--space-3);">
+      <img src={cover} alt="" loading="lazy" style="width:100%; height:180px; object-fit:cover; border-radius: var(--radius-md) var(--radius-md) 0 0;" />
+    </a>
+  )}
+  <div class="card__meta">
+    <time datetime={isoDate(date)}>{formatDate(date)}</time>
+    {categoryName && <span>{categoryName}</span>}
+  </div>
+  <h3 class="card__title">
+    <a href={href}>{title}</a>
+  </h3>
+  {description && <p class="card__excerpt">{description}</p>}
+  {tags.length > 0 && (
+    <div>
+      {tags.slice(0, 4).map((t) => (
+        <span class="tag">#{t}</span>
+      ))}
+    </div>
+  )}
+</article>

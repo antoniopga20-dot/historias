@@ -1,0 +1,21 @@
+{
+  "name": "historias",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Historias — blog personal académico de Antonio A. Peña Galindo.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build && pagefind --site dist",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.7",
+    "@astrojs/sitemap": "3.2.1",
+    "astro": "^4.16.18",
+    "pagefind": "^1.2.0",
+    "prismjs": "^1.29.0"
+  }
+}

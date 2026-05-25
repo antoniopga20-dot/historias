@@ -1,0 +1,27 @@
+---
+import { formatDate, isoDate } from "../utils/formatDate";
+
+interface Props {
+  title: string;
+  kind?: string;
+  place?: string;
+  date?: Date | string;
+  details?: string;
+  url?: string;
+}
+const { title, kind, place, date, details, url } = Astro.props;
+---
+<article style="padding-block: var(--space-4); border-bottom: 1px solid var(--rule);">
+  <header style="display:flex; gap: var(--space-3); flex-wrap: wrap; align-items: baseline; margin-bottom: var(--space-2);">
+    <h3 style="margin:0; font-size: var(--fs-lg);">
+      {url ? <a href={url} target="_blank" rel="noopener noreferrer">{title}</a> : title}
+    </h3>
+    {kind && <span class="tag">{kind}</span>}
+  </header>
+  <p class="muted" style="margin:0 0 var(--space-2) 0; font-size: var(--fs-sm);">
+    {date && <time datetime={isoDate(date)}>{formatDate(date)}</time>}
+    {date && place && <span> · </span>}
+    {place && <span>{place}</span>}
+  </p>
+  {details && <p style="margin:0; color: var(--text-soft); font-size: var(--fs-sm);">{details}</p>}
+</article>

@@ -1,0 +1,16 @@
+---
+interface Props {
+  /** Ancho máximo. Por defecto usa el valor de --container-max (1200px). */
+  width?: "default" | "narrow" | "prose";
+  as?: keyof HTMLElementTagNameMap;
+  class?: string;
+}
+const { width = "default", as: Tag = "div", class: className = "" } = Astro.props;
+const widthClass =
+  width === "narrow" ? "container container--narrow" :
+  width === "prose"  ? "container container--prose"  :
+                       "container";
+---
+<Tag class={`${widthClass} ${className}`.trim()}>
+  <slot />
+</Tag>

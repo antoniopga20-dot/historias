@@ -1,0 +1,73 @@
+---
+import { getCollection } from "astro:content";
+import PageLayout from "../layouts/PageLayout.astro";
+import PublicationItem from "../components/PublicationItem.astro";
+
+const all = await getCollection("publicaciones", ({ data }) => !data.draft);
+
+const groups: { key: string; label: string; help?: string }[] = [
+  { key: "libro", label: "Libros" },
+  { key: "capitulo", label: "Capítulos de libro" },
+  { key: "articulo-academico", label: "Artículos académicos" },
+  { key: "articulo-revista", label: "Artículos de revistas" },
+  { key: "divulgacion", label: "Divulgación" },
+  { key: "columna", label: "Columnas de opinión" },
+  { key: "publicacion-digital", label: "Publicaciones digitales" },
+  { key: "resena", label: "Reseñas" },
+  { key: "en-prensa", label: "En prensa" },
+  { key: "otro", label: "Otros textos" },
+];
+
+function byYearDesc(a: any, b: any) {
+  const ay = Number(a.data.year ?? 0);
+  const by = Number(b.data.year ?? 0);
+  return by - ay;
+}
+---
+<PageLayout
+  title="Publicaciones"
+  eyebrow="Trabajos"
+  lead="Listado de publicaciones académicas, divulgación y trabajos en prensa. La página se irá completando con el tiempo."
+  width="narrow"
+>
+  {all.length === 0 && (
+    <p class="muted">
+      Esta página está en construcción. Las publicaciones se irán cargando
+      desde <code>src/content/publicaciones/</code>. Mientras tanto, puedes
+      revisar mi perfil en
+      <a href="https://orcid.org/0009-0002-9180-4911" target="_blank" rel="noopener noreferrer">ORCID</a>
+      y en
+      <a href="https://independent.academia.edu/AntonioPe%C3%B1aGalindo" target="_blank" rel="noopener noreferrer">Academia.edu</a>.
+    </p>
+  )}
+
+  {groups.map((g) => {
+    const items = all.filter((p) => p.data.type === g.key).sort(byYearDesc);
+    if (items.length === 0) return null;
+    return (
+      <section style="margin-bottom: var(--space-7);">
+        <h2 style="font-size: var(--fs-xl); border-bottom: 1px solid var(--rule); padding-bottom: var(--space-2);">
+          {g.label}
+        </h2>
+        {items.map((p) => (
+          <PublicationItem
+            title={p.data.title}
+            authors={p.data.authors}
+            year={p.data.year}
+            venue={p.data.venue}
+            details={p.data.details}
+            url={p.data.url}
+            pdf={p.data.pdf}
+            status={p.data.status}
+          />
+        ))}
+      </section>
+    );
+  })}
+
+  <p class="muted" style="font-size: var(--fs-sm); margin-top: var(--space-7);">
+    Para añadir una publicación, crea un archivo en
+    <code>src/content/publicaciones/</code> siguiendo el ejemplo de
+    <code>ejemplo-publicacion.md</code>.
+  </p>
+</PageLayout>
