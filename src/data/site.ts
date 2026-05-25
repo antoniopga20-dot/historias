@@ -21,10 +21,10 @@ export const site = {
   lang: "es",
   /** Locale para Open Graph */
   locale: "es_MX",
-  /** URL pública del sitio. Cambia al desplegar. */
-  url: "https://historias-apena.pages.dev",
-  /** Correo electrónico de contacto. [PENDIENTE: insertar correo definitivo] */
-  email: "[PENDIENTE: insertar correo electrónico]",
+  /** URL pública del sitio. */
+  url: "https://historias.pages.dev",
+  /** Correo electrónico de contacto institucional. */
+  email: "apenag@institutomora.edu.mx",
   /** Año de inicio del proyecto (para el copyright del footer) */
   startYear: 2026,
 } as const;

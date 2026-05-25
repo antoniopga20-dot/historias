@@ -15,7 +15,7 @@ import sitemap from "@astrojs/sitemap";
  * descomenta también `base: "/historias"`.
  */
 export default defineConfig({
-  site: "https://historias-apena.pages.dev",
+  site: "https://historias.pages.dev",
   // base: "/historias",
   trailingSlash: "ignore",
   integrations: [sitemap()],
