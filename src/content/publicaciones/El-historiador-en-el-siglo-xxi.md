@@ -1,0 +1,14 @@
+---
+title: "El historiador en el siglo XXI: reflexiones del oficio y una propuesta para la investigación del presente"
+type: "articulo-academico"
+authors: "Antonio A. Peña Galindo"
+year: 2021
+venue: "Academia.edu"
+details: "Ponencia"
+url: "https://www.academia.edu/89202515/El_historiador_en_el_siglo_XXI_Reflexiones_del_oficio_y_una_propuesta_para_la_investigación_del_presente"
+status: "publicado"
+---
+
+El objetivo del presente trabajo es tomar en consideración algunas reflexiones sobre el papel del historiador de la actualidad, quien durante el transcurso del tiempo habría destacado por ser un actor fundamental para la reconstrucción del conocimiento nacional y que en nuestros días se ha desmoronado parcialmente su importancia. Por lo cual, el trabajo incide en la necesidad de retomar los aspectos del historiador de hoy que lo sitúan en esta posición, tales como la globalización y capitalismo que conllevan a una producción masiva de información. E igualmente, para complementar estas ideas se presenta una propuesta de la construcción del conocimiento histórico para el siglo XXI a través de “Historia a Debate” un grupo de historiadores conformado por Carlos Barros, quien propone como se puede realizar una historia inmediata o historia presente por medio de la innovación, la historiografía digital y reivindicación de la historia para el siglo actual a través del manifiesto publicado en el año 2001 “manifiesto Historia a Debate”
+ 
+Versión completa republicada en el blog: [https://www.academia.edu/89202515/El_historiador_en_el_siglo_XXI_Reflexiones_del_oficio_y_una_propuesta_para_la_investigación_del_presente]
